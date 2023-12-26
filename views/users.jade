@@ -1,0 +1,83 @@
+extends layout
+
+block content
+  script.
+    function search() {
+        let inputFirstName = document.getElementById("first-name-search");
+        let inputLastName = document.getElementById("last-name-search");
+        let inputCountry = document.getElementById("country-search");
+        let inputCity = document.getElementById("city-search");
+        let inputZipCode = document.getElementById("zipcode-search");
+        let inputAddress = document.getElementById("address-search");
+        let table = document.getElementById("myTable");
+
+        let filterFirstName = inputFirstName.value.toUpperCase();
+        let filterLastName = inputLastName.value.toUpperCase();
+        let filterCountry = inputCountry.value.toUpperCase();
+        let filterCity = inputCity.value.toUpperCase();
+        let filterZipCode = inputZipCode.value.toUpperCase();
+        let filterAddress = inputAddress.value.toUpperCase();
+
+        let tr = table.rows;
+        for (let i = 2; i < tr.length; i++) {
+            td = tr[i].cells;
+            tdFirstName = td[1].innerText;
+            tdLastName = td[2].innerText;
+            tdCountry = td[4].innerText;
+            tdCity = td[5].innerText;
+            tdZipCode = td[6].innerText;
+            tdAddress = td[7].innerText;
+            if (tdFirstName.toUpperCase().indexOf(filterFirstName) > -1 
+                && tdLastName.toUpperCase().indexOf(filterLastName) > -1 
+                && tdCountry.toUpperCase().indexOf(filterCountry) > -1
+                && tdCity.toUpperCase().indexOf(filterCity) > -1
+                && tdZipCode.toUpperCase().indexOf(filterZipCode) > -1
+                && tdAddress.toUpperCase().indexOf(filterAddress) > -1) {
+                tr[i].style.display = "";
+            } else
+                tr[i].style.display = "none";
+        }
+    }
+  h1= title
+  div
+  table(id="myTable")
+    thead
+      tr
+        th UserID
+        th First Name
+        th Last Name
+        th Date of birth 
+        th Country 
+        th City 
+        th Zip Code
+        th Address
+        th Added Timestamp 
+        th Updated Timestamp
+      tr 
+        th
+        th 
+          input(type="text", id="first-name-search", placeholder="Search by First Name", onkeyup="search()")
+        th  
+          input(type="text", id="last-name-search", placeholder="Search by Last Name", onkeyup="search()")
+        th  
+        th 
+          input(type="text", id="country-search", placeholder="Search by Country", onkeyup="search()")
+        th  
+          input(type="text", id="city-search", placeholder="Search by City", onkeyup="search()")
+        th 
+          input(type="text", id="zipcode-search", placeholder="Search by ZipCode", onkeyup="search()")
+        th  
+          input(type="text", id="address-search", placeholder="Search by Address", onkeyup="search()")
+    tbody
+      each user in users
+        tr
+          td= user.UserID
+          td= user.FirstName 
+          td= user.LastName 
+          td= new Date(user.DateOfBirth).toLocaleDateString() 
+          td= user.Country 
+          td= user.City 
+          td= user.ZipCode
+          td= user.Address
+          td= user.AddedTimestamp 
+          td= user.UpdatedTimestamp

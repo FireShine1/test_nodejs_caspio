@@ -13,7 +13,7 @@ export class CaspioHelper {
                     client_id: config.caspio.clientId,
                     client_secret: config.caspio.clientSecret,
                 },
-            }, 
+            },
             async (err, resCaspio) => {
                 if (err || resCaspio.statusCode != 200) {
                     if (err) {
@@ -61,13 +61,13 @@ export class CaspioHelper {
         let allRecords = [];
         
         let pageNumber = 1;
-        do{
-            let pageQuery = query+`&q.pageNumber=${pageNumber}&q.pageSize=1000`;
+        do {
+            let pageQuery = query + `&q.pageNumber=${pageNumber}&q.pageSize=1000`;
             queryResult = await this.get(ressource, ressource_name, pageQuery, token);
             allRecords = allRecords.concat(queryResult);
             pageNumber+=1;
             
-        }while(queryResult && queryResult.length === 1000)
+        } while (queryResult && queryResult.length === 1000)
         return allRecords;
     }
 
@@ -102,11 +102,11 @@ export class CaspioHelper {
             }
 
             let response = await rp(options);
-            logger.info(JSON.stringify(response));
-            return response;
+            //logger.info(JSON.stringify(response));
+            return response.Result[0];
         }
         catch (err) {
-            logger.error(JSON.stringify(err));
+            //logger.error(JSON.stringify(err));
             return false;
         }
     }
@@ -136,7 +136,6 @@ export class CaspioHelper {
 
         let response = await rp(options);
 
-        console.log(response);
         return response;
     }
 
